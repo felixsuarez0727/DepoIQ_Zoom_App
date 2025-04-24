@@ -5,6 +5,7 @@ import { handleError, sanitize } from '../helpers/routing.js';
 import { getDeeplink, getToken } from '../helpers/zoom-api.js';
 
 import session from '../session.js';
+import { saveTokensForUser } from '../helpers/token-store.js';
 
 const router = express.Router();
 
@@ -31,12 +32,19 @@ router.get('/', session, async (req, res, next) => {
         // console.log("refresh_token:", refresh_token);
 
         // Save the tokens and user ID in the session
-        req.session.zoomTokens = {
+        // req.session.zoomTokens = {
+        //     accessToken: access_token,
+        //     refresh_Token: refresh_token,
+        //     expiresAt: Date.now() + (expires_in * 1000),
+        //     userId: user_id
+        // };
+
+        // Save in the JSON File
+        await saveTokensForUser(user_id, {
             accessToken: access_token,
             refresh_Token: refresh_token,
-            expiresAt: Date.now() + (expires_in * 1000),
-            userId: user_id
-        };
+            expiresAt: Date.now() + (expires_in * 1000)
+        });
 
         // Generate and redirect to the URL to download the app in the Zoom Marketplace Client
         const deeplink = await getDeeplink(access_token); // fetch deeplink from Zoom API

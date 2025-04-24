@@ -829,3 +829,7 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+
+# Local access tokens
+access_tokens.json

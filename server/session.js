@@ -17,10 +17,10 @@ export default cookieSession({
     keys: [zoomApp.sessionSecret],
     secret: zoomApp.sessionSecret,
     httpOnly: true,
-    secure: true, // Obligatorio con Ngrok HTTPS
-    sameSite: 'none', // Essential for Zoom redirects
-    maxAge: 15 * 60 * 1000, // 15 minutos
-    overwrite: false, // Previene sobrescritura
+    secure: true, // Required with Ngrok HTTPS 
+    sameSite: 'none', // Essential for Zoom redirects 
+    maxAge: 15 * 60 * 1000, // 15 minutes 
+    overwrite: false, // Prevents overwriting 
     signed: true,
     // domain: '.ngrok-free.app'
 });
