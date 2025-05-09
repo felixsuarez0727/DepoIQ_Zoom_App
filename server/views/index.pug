@@ -1,16 +1,59 @@
+//- extends layout
+
+//- block content
+//-     h1=title
+//-     if isZoom
+//-         p Welcome to your Zoom App
+//-     else
+//-         p You're viewing your Zoom App through the browser.&nbsp;
+//-             a(href=`/install`) Click Here
+//-             | &nbsp;to install your app in Zoom.
+
+//- append scripts
+//-     if isZoom
+//-         script(type="module" src='/js/bundle.mjs')
+//-         script(nomodule src='/js/bundle.js')
+
 extends layout
 
 block content
-    h1=title
-    if isZoom
-        p Welcome to your Zoom App
-    else
-        p You're viewing your Zoom App through the browser.&nbsp;
-            a(href=`/install`) Click Here
-            | &nbsp;to install your app in Zoom.
+  h1= title
+
+  if isZoom
+    .app-container
+    header.app-header
+      h1 DepoIQ
+      .deposition-status(id="depoStatus") Pre-deposition
+
+    .main-content
+      //- Programming panel
+      .schedule-section(id="scheduleSection")
+        h2 Schedule Deposition
+        form(id="scheduleForm")
+          input(type="datetime-local" id="depoDateTime" required)
+          input(type="text" id="caseNumber" placeholder="Case Number")
+          button(type="submit") Schedule
+
+      //- Panel during deposition
+      .live-section.hidden(id="liveSection")
+        .transcript-container
+          h3 Real-time Transcript
+          .transcript(id="liveTranscript")
+
+        .insights-container
+          h3 Key Insights
+          .insights(id="liveInsights")
+
+        .controls
+          button(id="highlightBtn") Mark Important Moment
+          button(id="noteBtn") Add Note
+
+  else
+    p You're viewing your Zoom App through the browser.&nbsp;
+      a(href=`/install`) Click Here
+      | &nbsp;to install your app in Zoom.
 
 append scripts
-    if isZoom
-        script(type="module" src='/js/bundle.mjs')
-        script(nomodule src='/js/bundle.js')
-
+  if isZoom
+    script(type="module" src='/js/bundle.mjs')
+    script(nomodule src='/js/bundle.js')

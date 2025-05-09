@@ -1,8 +1,117 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+  color: #333;
 }
 
-a {
-  color: #00B7FF;
+.app-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 15px;
+}
+
+.app-header h1 {
+  margin: 0;
+  color: #2d8cff;
+  font-size: 1.5em;
+}
+
+.deposition-status {
+  background-color: #f0f0f0;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+/* Schedule form */
+#scheduleForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#scheduleForm input, #scheduleForm button {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+#scheduleForm button {
+  background-color: #2d8cff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+#scheduleForm button:hover {
+  background-color: #1a7ae6;
+}
+
+/* Live stream section */
+.live-section {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.transcript-container, .insights-container {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.transcript-container h3, .insights-container h3 {
+  margin-top: 0;
+  font-size: 1.1em;
+  color: #2d8cff;
+}
+
+.transcript {
+  font-size: 0.9em;
+  line-height: 1.4;
+}
+
+.insight-item {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 0.9em;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+}
+
+.controls button {
+  flex: 1;
+  padding: 8px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.controls button:hover {
+  background-color: #e0e0e0;
+}
+
+/* Utilities */
+.hidden {
+  display: none !important;
 }

@@ -52,7 +52,22 @@ export const port = config.PORT || '3000';
 export const recallConfig = {
     apiKey: process.env.RECALL_API_KEY,
     authToken: process.env.RECALL_AUTH_TOKEN,
-    oauthAppId: process.env.RECALL_OAUTH_APP_ID
+    oauthAppId: process.env.RECALL_OAUTH_APP_ID,
+    callbackBaseURL: process.env.RECALL_CALLBACK_BASE
+};
+
+// AWS S3
+export const awsCredentials = {
+    tmpAwsAccessKey: process.env.TEMP_AWS_ACCESS_KEY_ID,
+    tmpAwsSecretAccessKey: process.env.TEMP_AWS_SECRET_ACCESS_KEY,
+    tmpS3BucketName: process.env.TEMP_S3_BUCKET_NAME,
+    tmpAwsRegion: process.env.TEMP_AWS_REGION,
+};
+
+// Yo call the API to create deposition
+export const createDepoAPIConfig = {
+    totpSecret: process.env.TOTP_SECRET,
+    apiBaseURL: process.env.API_BASE_URL,
 };
 
 // require secrets are explicitly imported

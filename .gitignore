@@ -830,6 +830,11 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-
 # Local access tokens
 access_tokens.json
+
+# Bot IDs for meetings
+meeting_bots.json
+
+# Trancripts folder
+meeting_transcripts/

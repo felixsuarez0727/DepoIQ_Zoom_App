@@ -48,19 +48,22 @@ function tokenRequest(params, id = '', secret = '') {
 
 /**
  * Generic function for making requests to the Zoom API
- * @param {string} method - Request method
- * @param {string | URL} endpoint - Zoom API Endpoint
- * @param {string} token - Access Token
- * @param {object} [data=null] - Request data
+ * @param {string} method - Request method (GET, POST, etc.)
+ * @param {string | URL} endpoint - Zoom API endpoint
+ * @param {string} token - Zoom access token
+ * @param {object} [data=null] - Request body (for POST, PUT, etc.)
+ * @param {object} [customHeaders={}] - Optional additional headers
+ * @returns {Promise<object>} - Zoom API response data
  */
-function apiRequest(method, endpoint, token, data = null) {
+function apiRequest(method, endpoint, token, data = null, customHeaders = {}) {
     return axios({
-        data,
         method,
         baseURL,
         url: `/v2${endpoint}`,
+        data,
         headers: {
             Authorization: `Bearer ${token}`,
+            ...customHeaders, // Optional custom headers go here
         },
     }).then(({ data }) => Promise.resolve(data));
 }
@@ -174,3 +177,53 @@ export function getDeeplink(token) {
         }),
     }).then((data) => Promise.resolve(data.deeplink));
 }
+
+/**
+ * Create a Zoom Meeting
+ * @param {{
+*   topic: string,
+*   start_time: string,
+*   duration?: number,
+*   password?: string,
+*   agenda?: string,
+*   settings?: object
+* }} options - Meeting configuration
+* @param {string} token - Zoom Access Token
+* @returns {Promise<object>} Zoom meeting object
+*/
+export async function createZoomMeeting(options, token) {
+    if (!token || typeof token !== 'string') {
+        throw createError(401, 'Missing or invalid Zoom access token');
+    }
+
+    // Get the user ID from Zoom
+    const userInfo = await apiRequest('GET', '/users/me', token);
+    const userId = userInfo.id;
+
+    // Prepare custom headers
+    const headers = {
+        'Zoom-SDK-Origin': 'developer' // NEED TO TEST THIS, to see if it is posible to schedule a meeting
+    };
+
+   return apiRequest('POST', `/users/${userId}/meetings`, token, {
+       type: 2, // Scheduled meeting
+       topic: options.topic || 'Deposition Meeting',
+       start_time: options.start_time,
+       duration: options.duration || 60,
+       timezone: 'UTC',
+       password: options.password || '',
+       agenda: options.agenda || '',
+       settings: {
+           host_video: true,
+           participant_video: true,
+           join_before_host: false,
+           mute_upon_entry: false,
+           waiting_room: true,
+           auto_recording: 'cloud',
+           alternative_hosts: '',
+           ...options.settings // Allows to overwrite or add settings
+       }
+   },
+   headers);
+}
+

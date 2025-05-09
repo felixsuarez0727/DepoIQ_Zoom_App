@@ -36,6 +36,10 @@ cd DepoIQ_Zoom_App
 # run NPM to install the app dependencies
 npm install
 
+## install Python dependencies
+
+pip install pyotp python-dotenv
+
 # initialize your ngrok session
 ngrok http 3000
 ```
